@@ -1,49 +1,116 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#111827">
-  <meta name="description" content="Confira nossas melhores ofertas!">
-  <title>Minha Vitrine de Ofertas</title>
+  <meta name="description" content="Encontre ofertas e produtos selecionados na Shopee e no Mercado Livre.">
+  <title>Minha Vitrine | Ofertas</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+
+  <div class="topo">
+    <p>🛍️ Ofertas selecionadas para você!</p>
+  </div>
+
+  <header class="header">
+    <div class="header-conteudo">
+      <a href="#" class="marca">
+        <span class="marca-icone">🛍️</span>
+        <span>MINHA <strong>VITRINE</strong></span>
+      </a>
+      <span class="slogan">As melhores oportunidades em um só lugar</span>
+    </div>
+  </header>
 
   <main class="container">
 
-    <header class="header">
-      <div class="logo">🛍️</div>
-      <h1>MINHA VITRINE</h1>
-      <p>Ofertas selecionadas para você!</p>
-    </header>
-
     <section class="banner">
-      <h2>Encontre sua próxima compra!</h2>
-      <p>Confira nossos produtos e aproveite as ofertas.</p>
+      <div class="banner-conteudo">
+        <span class="etiqueta">VITRINE DE OFERTAS</span>
+        <h1>Encontre produtos que valem a pena!</h1>
+        <p>Confira nossa seleção de produtos da Shopee e Mercado Livre.</p>
+        <a href="#lista-produtos" class="banner-botao">VER PRODUTOS <span>→</span></a>
+      </div>
+      <div class="banner-icone">🏷️</div>
     </section>
 
-    <section class="filtros">
-      <button class="filtro ativo" data-loja="todos">Todos</button>
-      <button class="filtro" data-loja="shopee">Shopee</button>
-      <button class="filtro" data-loja="mercadolivre">
-        Mercado Livre
-      </button>
+    <section class="vantagens">
+      <div>🚚 <span>Ofertas online</span></div>
+      <div>🔎 <span>Produtos selecionados</span></div>
+      <div>🛒 <span>Compra nas lojas oficiais</span></div>
     </section>
 
-    <section id="produtos" class="produtos"></section>
+    <section class="secao-categorias">
+      <div class="titulo-secao">
+        <div>
+          <span class="subtitulo">EXPLORE</span>
+          <h2>Categorias</h2>
+        </div>
+      </div>
 
-    <footer>
-      <p>Alguns links podem gerar comissão sem custo adicional.</p>
-      <p>© 2026 Minha Vitrine</p>
-    </footer>
+      <div class="categorias">
+        <button class="categoria ativo" data-categoria="todos">
+          <span>🔥</span>Todos
+        </button>
+        <button class="categoria" data-categoria="eletronicos">
+          <span>🎧</span>Eletrônicos
+        </button>
+        <button class="categoria" data-categoria="casa">
+          <span>🏠</span>Casa
+        </button>
+        <button class="categoria" data-categoria="beleza">
+          <span>✨</span>Beleza
+        </button>
+        <button class="categoria" data-categoria="ferramentas">
+          <span>🔧</span>Ferramentas
+        </button>
+      </div>
+    </section>
+
+    <section class="secao-produtos" id="lista-produtos">
+
+      <div class="titulo-secao">
+        <div>
+          <span class="subtitulo">NOSSA SELEÇÃO</span>
+          <h2>Produtos em destaque</h2>
+        </div>
+        <span id="contador" class="contador">0 produtos</span>
+      </div>
+
+      <div class="busca">
+        <span>🔎</span>
+        <input
+          type="search"
+          id="pesquisa"
+          placeholder="O que você está procurando?"
+          aria-label="Pesquisar produtos"
+        >
+      </div>
+
+      <div class="filtros-loja">
+        <button class="filtro ativo" data-loja="todos">Todas as lojas</button>
+        <button class="filtro" data-loja="shopee">Shopee</button>
+        <button class="filtro" data-loja="mercadolivre">Mercado Livre</button>
+      </div>
+
+      <div id="produtos" class="produtos"></div>
+
+    </section>
 
   </main>
 
-  <script src="script.js"></script>
+  <footer class="footer">
+    <div class="footer-logo">🛍️ MINHA VITRINE</div>
+    <p>Ofertas selecionadas para facilitar suas compras.</p>
+    <p class="aviso">
+      Alguns links são de afiliados. Podemos receber uma comissão
+      pela compra, sem custo adicional para você.
+    </p>
+    <p class="direitos">© 2026 Minha Vitrine. Todos os direitos reservados.</p>
+  </footer>
 
+  <script src="script.js"></script>
 </body>
-                            </html>
-                            
+</html>
