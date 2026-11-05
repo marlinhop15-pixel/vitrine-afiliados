@@ -1,0 +1,184 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+.container {
+  max-width: 650px;
+  margin: auto;
+  padding: 18px;
+}
+
+.header {
+  text-align: center;
+  padding: 25px 10px;
+}
+
+.logo {
+  font-size: 45px;
+}
+
+.header h1 {
+  font-size: 26px;
+  margin-top: 8px;
+  font-weight: 900;
+}
+
+.header p {
+  color: #64748b;
+  margin-top: 8px;
+}
+
+.banner {
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: white;
+  padding: 25px;
+  border-radius: 18px;
+  margin-bottom: 20px;
+}
+
+.banner h2 {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.banner p {
+  font-size: 14px;
+}
+
+.filtros {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.filtro {
+  flex: 1;
+  padding: 12px 5px;
+  border: none;
+  border-radius: 10px;
+  background: white;
+  color: #334155;
+  font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.filtro.ativo {
+  background: #111827;
+  color: white;
+}
+
+.produtos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.produto {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px #0000000c;
+}
+
+.produto-imagem {
+  width: 100%;
+  height: 155px;
+  object-fit: contain;
+  background: white;
+  padding: 10px;
+}
+
+.sem-imagem {
+  height: 155px;
+  background: #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 45px;
+}
+
+.produto-info {
+  padding: 12px;
+}
+
+.produto h3 {
+  font-size: 15px;
+  min-height: 36px;
+}
+
+.descricao {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 7px;
+  min-height: 30px;
+}
+
+.preco {
+  font-size: 17px;
+  font-weight: 900;
+  margin: 12px 0;
+}
+
+.botao {
+  display: block;
+  padding: 12px 5px;
+  border-radius: 9px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.shopee {
+  background: #ee4d2d;
+}
+
+.mercadolivre {
+  background: #3483fa;
+}
+
+footer {
+  text-align: center;
+  padding: 30px 10px;
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.8;
+}
+
+.mensagem {
+  grid-column: 1 / -1;
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  text-align: center;
+  color: #64748b;
+}
+
+@media (max-width: 360px) {
+  .container {
+    padding: 10px;
+  }
+
+  .produtos {
+    gap: 9px;
+  }
+
+  .produto-info {
+    padding: 9px;
+  }
+
+  .produto h3 {
+    font-size: 13px;
+  }
+}
+
