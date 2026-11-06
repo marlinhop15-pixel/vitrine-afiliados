@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administração - Minha Vitrine</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #101827;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .painel {
+      width: 100%;
+      max-width: 420px;
+      padding: 28px;
+      background: #1e293b;
+      border-radius: 16px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 25px;
+    }
+
+    p {
+      text-align: center;
+      color: #cbd5e1;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin: 10px 0;
+      border: 1px solid #475569;
+      border-radius: 8px;
+      background: #0f172a;
+      color: white;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 12px;
+      border: 0;
+      border-radius: 8px;
+      background: #f97316;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #mensagem {
+      margin-top: 15px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    #areaAdmin {
+      display: none;
+    }
+
+    .sair {
+      background: #475569;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="painel">
+
+    <section id="areaLogin">
+      <h1>🔐 Minha Vitrine</h1>
+      <p>Painel administrativo</p>
+
+      <input
+        type="email"
+        id="email"
+        placeholder="Seu e-mail"
+        autocomplete="username"
+      >
+
+      <input
+        type="password"
+        id="senha"
+        placeholder="Sua senha"
+        autocomplete="current-password"
+      >
+
+      <button id="btnEntrar" onclick="entrar()">
+        Entrar
+      </button>
+
+      <div id="mensagem"></div>
+    </section>
+
+    <section id="areaAdmin">
+      <h1>Administração</h1>
+      <p id="boasVindas">Acesso autorizado!</p>
+
+      <p>Área administrativa liberada.</p>
+
+      <button class="sair" onclick="sair()">
+        Sair
+      </button>
+    </section>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+
+  <script>
+    const supabaseClient = window.supabaseClient;
+
+    async function entrar() {
+      const email = document.getElementById("email").value.trim();
+      const senha = document.getElementById("senha").value;
+      const mensagem = document.getElementById("mensagem");
+      const botao = document.getElementById("btnEntrar");
+
+      if (!email || !senha) {
+        mensagem.textContent = "Preencha e-mail e senha.";
+        return;
+      }
+
+      botao.disabled = true;
+      mensagem.textContent = "Verificando acesso...";
+
+      try {
+        const { error } = await supabaseClient.auth.signInWithPassword({
+          email,
+          password: senha
+        });
+
+        if (error) {
+          mensagem.textContent = "E-mail ou senha incorretos.";
+          return;
+        }
+
+        await verificarAdministrador();
+
+      } catch (erro) {
+        mensagem.textContent = "Erro ao verificar acesso.";
+        console.error(erro);
+      } finally {
+        botao.disabled = false;
+      }
+    }
+
+    async function verificarAdministrador() {
+      const mensagem = document.getElementById("mensagem");
+
+      const { data, error } = await supabaseClient.rpc("is_admin");
+
+      if (error || data !== true) {
+        await supabaseClient.auth.signOut();
+        mensagem.textContent = "Este usuário não é administrador.";
+        return;
+      }
+
+      document.getElementById("areaLogin").style.display = "none";
+      document.getElementById("areaAdmin").style.display = "block";
+    }
+
+    async function sair() {
+      await supabaseClient.auth.signOut();
+
+      document.getElementById("areaAdmin").style.display = "none";
+      document.getElementById("areaLogin").style.display = "block";
+      document.getElementById("senha").value = "";
+      document.getElementById("mensagem").textContent = "";
+    }
+
+    async function iniciar() {
+      const { data } = await supabaseClient.auth.getSession();
+
+      if (data.session) {
+        await verificarAdministrador();
+      }
+    }
+
+    iniciar();
+  </script>
+
+</body>
+</html>
