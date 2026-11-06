@@ -1,33 +1,8 @@
 // ======================================
-// CADASTRO DOS PRODUTOS
+// PRODUTOS CARREGADOS DO SUPABASE
 // ======================================
 
-const produtos = [
-
-  {
-    nome: "Fone Bluetooth",
-    descricao: "Confira esta oferta especial!",
-    preco: "Confira o preço",
-    precoAnterior: "",
-    imagem: "",
-    loja: "shopee",
-    categoria: "eletronicos",
-    link: "COLE_SEU_LINK_SHOPEE_AQUI"
-  },
-
-  {
-    nome: "Smartwatch",
-    descricao: "Uma ótima opção para você!",
-    preco: "Confira o preço",
-    precoAnterior: "",
-    imagem: "",
-    loja: "mercadolivre",
-    categoria: "eletronicos",
-    link: "COLE_SEU_LINK_MERCADO_LIVRE_AQUI"
-  }
-
-];
-
+let produtos = [];
 // ======================================
 // ELEMENTOS DA PÁGINA
 // ======================================
@@ -327,7 +302,40 @@ document.querySelectorAll(".categoria").forEach(botao => {
 pesquisa.addEventListener("input", mostrarProdutos);
 
 // ======================================
+// CARREGAR PRODUTOS DO SUPABASE
+// ======================================
+
+async function carregarProdutos() {
+  container.textContent = "Carregando produtos...";
+
+  const { data, error } = await window.supabaseClient
+    .from("products")
+    .select("*")
+    .eq("active", true)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Erro ao carregar produtos:", error);
+    container.textContent = "Não foi possível carregar os produtos.";
+    return;
+  }
+
+  produtos = data.map(item => ({
+    nome: item.name,
+    descricao: item.description,
+    preco: item.price,
+    precoAnterior: item.old_price,
+    imagem: item.image_url,
+    loja: item.store,
+    categoria: item.category,
+    link: item.affiliate_url
+  }));
+
+  mostrarProdutos();
+}
+
+// ======================================
 // INICIAR VITRINE
 // ======================================
 
-mostrarProdutos();
+carregarProdutos();
