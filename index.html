@@ -3,59 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Minha Vitrine | Ofertas e Produtos</title>
+<title>Minha Vitrine - Ofertas</title>
 
 <style>
 *{box-sizing:border-box}
 
 body{
   margin:0;
-  background:#101827;
-  color:white;
+  padding:0;
+  background:#f1f5f9;
+  color:#1e293b;
   font-family:Arial,sans-serif;
 }
 
 header{
-  background:#1e293b;
-  padding:25px 16px;
+  background:#fff;
+  padding:18px 12px;
   text-align:center;
+  box-shadow:0 2px 8px #00000012;
 }
 
 header h1{
   margin:0;
   color:#f97316;
-  font-size:30px;
+  font-size:27px;
 }
 
 header p{
-  color:#cbd5e1;
-  margin-bottom:0;
+  margin:6px 0 0;
+  color:#64748b;
+  font-size:14px;
+}
+
+.banner{
+  background:linear-gradient(135deg,#f97316,#ea580c);
+  color:white;
+  padding:28px 18px;
+  text-align:center;
+}
+
+.banner h2{
+  margin:0 0 8px;
+  font-size:23px;
+}
+
+.banner p{
+  margin:0;
+  font-size:15px;
 }
 
 main{
   max-width:1100px;
   margin:auto;
-  padding:18px;
+  padding:16px;
 }
 
-.pesquisa{
+#pesquisa{
   width:100%;
-  padding:15px;
+  padding:14px;
+  border:1px solid #cbd5e1;
   border-radius:10px;
-  border:1px solid #475569;
-  background:#1e293b;
-  color:white;
+  background:white;
   font-size:16px;
   margin-bottom:18px;
+  outline:none;
+}
+
+#pesquisa:focus{
+  border-color:#f97316;
 }
 
 .grupo{
-  margin-bottom:20px;
+  margin-bottom:17px;
 }
 
 .grupo h3{
-  color:#f97316;
-  margin-bottom:10px;
+  font-size:16px;
+  margin:0 0 10px;
 }
 
 .botoes{
@@ -65,111 +89,135 @@ main{
 }
 
 .botoes button{
-  padding:10px 14px;
-  border:1px solid #475569;
+  border:1px solid #cbd5e1;
+  background:white;
+  color:#334155;
+  padding:9px 13px;
   border-radius:20px;
-  background:#1e293b;
-  color:white;
+  font-size:13px;
   cursor:pointer;
 }
 
 .botoes button.ativo{
   background:#f97316;
   border-color:#f97316;
+  color:white;
 }
 
 #contador{
-  color:#cbd5e1;
-  margin:20px 0;
+  margin:20px 0 12px;
+  color:#64748b;
+  font-size:14px;
 }
 
 #produtos{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-  gap:18px;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
 }
 
 .produto{
-  background:#1e293b;
-  border:1px solid #334155;
-  border-radius:13px;
-  padding:13px;
+  background:white;
+  border-radius:12px;
+  padding:10px;
+  box-shadow:0 2px 8px #0000000d;
   display:flex;
   flex-direction:column;
+  min-width:0;
 }
 
 .produto-imagem{
   width:100%;
-  height:190px;
+  height:155px;
   object-fit:contain;
   background:white;
-  border-radius:9px;
+  border-radius:8px;
 }
 
 .sem-imagem{
-  height:190px;
+  height:155px;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:#334155;
-  border-radius:9px;
-  font-size:45px;
+  background:#f1f5f9;
+  border-radius:8px;
+  font-size:38px;
 }
 
 .produto h3{
-  font-size:17px;
+  font-size:14px;
   line-height:1.4;
+  margin:11px 0 7px;
 }
 
 .produto p{
-  color:#cbd5e1;
-  line-height:1.5;
+  font-size:12px;
+  line-height:1.4;
+  color:#64748b;
+  margin:5px 0;
 }
 
 .preco{
-  color:#4ade80;
-  font-size:22px;
+  color:#16a34a!important;
+  font-size:19px!important;
   font-weight:bold;
 }
 
 .preco-anterior{
-  color:#94a3b8;
   text-decoration:line-through;
+  color:#94a3b8!important;
 }
 
 .loja{
-  color:#fbbf24;
-  font-size:13px;
+  color:#ea580c!important;
+  font-weight:bold;
+  font-size:12px!important;
 }
 
 .botao-oferta{
   display:block;
-  text-align:center;
-  text-decoration:none;
+  margin-top:auto;
+  padding:11px 5px;
   background:#f97316;
   color:white;
-  padding:13px;
+  text-decoration:none;
+  text-align:center;
   border-radius:8px;
+  font-size:13px;
   font-weight:bold;
-  margin-top:auto;
 }
 
 .mensagem{
   grid-column:1/-1;
-  text-align:center;
-  padding:30px;
-  background:#1e293b;
+  background:white;
   border-radius:12px;
-  color:#cbd5e1;
+  padding:25px;
+  text-align:center;
 }
 
 footer{
-  margin-top:35px;
-  padding:22px;
-  text-align:center;
+  margin-top:30px;
   background:#1e293b;
-  color:#94a3b8;
-  font-size:13px;
+  color:white;
+  padding:22px 15px;
+  text-align:center;
+  font-size:12px;
+  line-height:1.6;
+}
+
+@media(min-width:700px){
+  #produtos{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:18px;
+  }
+
+  .produto-imagem{
+    height:190px;
+  }
+
+  .produto h3{
+    font-size:16px;
+  }
 }
 </style>
 </head>
@@ -177,52 +225,60 @@ footer{
 <body>
 
 <header>
-  <h1>🛍️ Minha Vitrine</h1>
-  <p>Encontre ofertas e produtos selecionados</p>
+  <h1>🛍️ MINHA VITRINE</h1>
+  <p>As melhores ofertas em um só lugar</p>
 </header>
+
+<section class="banner">
+  <h2>Encontre sua próxima compra!</h2>
+  <p>Produtos selecionados com ofertas especiais</p>
+</section>
 
 <main>
 
-  <input
-    type="search"
-    id="pesquisa"
-    class="pesquisa"
-    placeholder="🔎 Pesquisar produtos..."
-  >
+<input
+  type="search"
+  id="pesquisa"
+  placeholder="🔎 Buscar produtos..."
+>
 
-  <div class="grupo">
-    <h3>Lojas</h3>
-    <div class="botoes">
-      <button class="filtro ativo" data-loja="todos">Todas</button>
-      <button class="filtro" data-loja="Mercado Livre">Mercado Livre</button>
-      <button class="filtro" data-loja="Amazon">Amazon</button>
-      <button class="filtro" data-loja="Shopee">Shopee</button>
-      <button class="filtro" data-loja="Outra">Outras</button>
-    </div>
+<div class="grupo">
+  <h3>Filtrar por loja</h3>
+  <div class="botoes">
+    <button class="filtro ativo" data-loja="todos">Todas</button>
+    <button class="filtro" data-loja="Mercado Livre">Mercado Livre</button>
+    <button class="filtro" data-loja="Amazon">Amazon</button>
+    <button class="filtro" data-loja="Shopee">Shopee</button>
+    <button class="filtro" data-loja="Outra">Outras</button>
   </div>
+</div>
 
-  <div class="grupo">
-    <h3>Categorias</h3>
-    <div class="botoes">
-      <button class="categoria ativo" data-categoria="todos">Todas</button>
-      <button class="categoria" data-categoria="Eletrônicos">Eletrônicos</button>
-      <button class="categoria" data-categoria="Casa">Casa</button>
-      <button class="categoria" data-categoria="Beleza">Beleza</button>
-      <button class="categoria" data-categoria="Ferramentas">Ferramentas</button>
-    </div>
+<div class="grupo">
+  <h3>Categorias</h3>
+  <div class="botoes">
+    <button class="categoria ativo" data-categoria="todos">Todas</button>
+    <button class="categoria" data-categoria="Eletrônicos">Eletrônicos</button>
+    <button class="categoria" data-categoria="Casa">Casa</button>
+    <button class="categoria" data-categoria="Beleza">Beleza</button>
+    <button class="categoria" data-categoria="Ferramentas">Ferramentas</button>
   </div>
+</div>
 
-  <div id="contador">Carregando produtos...</div>
+<div id="contador">Carregando produtos...</div>
 
-  <section id="produtos">
-    Carregando produtos...
-  </section>
+<section id="produtos">
+  Carregando produtos...
+</section>
 
 </main>
 
 <footer>
-  <p>Minha Vitrine</p>
-  <p>Alguns links são links de afiliados. Podemos receber uma comissão por compras realizadas, sem custo adicional para você.</p>
+  <strong>MINHA VITRINE</strong>
+  <p>
+    Alguns links são links de afiliados.
+    Podemos receber uma comissão por compras realizadas,
+    sem custo adicional para você.
+  </p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
