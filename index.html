@@ -1,118 +1,657 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#111827">
-  <meta name="description" content="Encontre ofertas e produtos selecionados na Shopee e no Mercado Livre.">
-  <title>Minha Vitrine | Ofertas</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administração - Minha Vitrine</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 16px;
+  background: #101827;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.painel {
+  max-width: 750px;
+  margin: 20px auto;
+}
+
+.card {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 18px;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 13px;
+  margin: 7px 0 13px;
+  border: 1px solid #475569;
+  border-radius: 8px;
+  background: #0f172a;
+  color: white;
+  font-size: 15px;
+}
+
+textarea {
+  min-height: 85px;
+  resize: vertical;
+}
+
+label {
+  display: block;
+  color: #cbd5e1;
+  font-size: 14px;
+}
+
+button {
+  padding: 13px;
+  border: none;
+  border-radius: 8px;
+  background: #f97316;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 5px 0;
+}
+
+button:disabled {
+  opacity: .5;
+}
+
+.botao {
+  width: 100%;
+}
+
+.secundario {
+  background: #475569;
+}
+
+.excluir {
+  background: #dc2626;
+}
+
+.ativar {
+  background: #15803d;
+}
+
+.produto {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 13px;
+  margin-top: 12px;
+}
+
+.produto img {
+  width: 100%;
+  max-height: 190px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: white;
+}
+
+.produto h3 {
+  margin-bottom: 5px;
+}
+
+.info {
+  color: #cbd5e1;
+  font-size: 14px;
+}
+
+#areaAdmin {
+  display: none;
+}
+
+#mensagem, #mensagemProduto {
+  text-align: center;
+  margin: 12px 0;
+  font-size: 14px;
+}
+
+.linha {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.linha input {
+  width: auto;
+}
+
+.acoes {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.acoes button {
+  flex: 1;
+}
+
+</style>
 </head>
+
 <body>
 
-  <div class="topo">
-    <p>🛍️ Ofertas selecionadas para você!</p>
-  </div>
+<div class="painel">
 
-  <header class="header">
-    <div class="header-conteudo">
-      <a href="#" class="marca">
-        <span class="marca-icone">🛍️</span>
-        <span>MINHA <strong>VITRINE</strong></span>
-      </a>
-      <span class="slogan">As melhores oportunidades em um só lugar</span>
-    </div>
-  </header>
+<section class="card" id="areaLogin">
 
-  <main class="container">
+<h1>🔐 Minha Vitrine</h1>
+<p style="text-align:center">Painel administrativo</p>
 
-    <section class="banner">
-      <div class="banner-conteudo">
-        <span class="etiqueta">VITRINE DE OFERTAS</span>
-        <h1>Encontre produtos que valem a pena!</h1>
-        <p>Confira nossa seleção de produtos da Shopee e Mercado Livre.</p>
-        <a href="#lista-produtos" class="banner-botao">VER PRODUTOS <span>→</span></a>
-      </div>
-      <div class="banner-icone">🏷️</div>
-    </section>
+<label>E-mail</label>
+<input type="email" id="email" autocomplete="username">
 
-    <section class="vantagens">
-      <div>🚚 <span>Ofertas online</span></div>
-      <div>🔎 <span>Produtos selecionados</span></div>
-      <div>🛒 <span>Compra nas lojas oficiais</span></div>
-    </section>
+<label>Senha</label>
+<input type="password" id="senha" autocomplete="current-password">
 
-    <section class="secao-categorias">
-      <div class="titulo-secao">
-        <div>
-          <span class="subtitulo">EXPLORE</span>
-          <h2>Categorias</h2>
-        </div>
-      </div>
+<button class="botao" id="btnEntrar" onclick="entrar()">
+Entrar
+</button>
 
-      <div class="categorias">
-        <button class="categoria ativo" data-categoria="todos">
-          <span>🔥</span>Todos
-        </button>
-        <button class="categoria" data-categoria="eletronicos">
-          <span>🎧</span>Eletrônicos
-        </button>
-        <button class="categoria" data-categoria="casa">
-          <span>🏠</span>Casa
-        </button>
-        <button class="categoria" data-categoria="beleza">
-          <span>✨</span>Beleza
-        </button>
-        <button class="categoria" data-categoria="ferramentas">
-          <span>🔧</span>Ferramentas
-        </button>
-      </div>
-    </section>
+<div id="mensagem"></div>
 
-    <section class="secao-produtos" id="lista-produtos">
+</section>
 
-      <div class="titulo-secao">
-        <div>
-          <span class="subtitulo">NOSSA SELEÇÃO</span>
-          <h2>Produtos em destaque</h2>
-        </div>
-        <span id="contador" class="contador">0 produtos</span>
-      </div>
+<section id="areaAdmin">
 
-      <div class="busca">
-        <span>🔎</span>
-        <input
-          type="search"
-          id="pesquisa"
-          placeholder="O que você está procurando?"
-          aria-label="Pesquisar produtos"
-        >
-      </div>
+<div class="card">
+<h1>📦 Administração</h1>
+<p style="text-align:center">Gerencie seus produtos</p>
 
-      <div class="filtros-loja">
-        <button class="filtro ativo" data-loja="todos">Todas as lojas</button>
-        <button class="filtro" data-loja="shopee">Shopee</button>
-        <button class="filtro" data-loja="mercadolivre">Mercado Livre</button>
-      </div>
+<button class="botao secundario" onclick="sair()">
+Sair da conta
+</button>
+</div>
 
-      <div id="produtos" class="produtos"></div>
+<div class="card">
 
-    </section>
+<h2 id="tituloFormulario">Cadastrar produto</h2>
 
-  </main>
+<form id="formProduto">
 
-  <footer class="footer">
-    <div class="footer-logo">🛍️ MINHA VITRINE</div>
-    <p>Ofertas selecionadas para facilitar suas compras.</p>
-    <p class="aviso">
-      Alguns links são de afiliados. Podemos receber uma comissão
-      pela compra, sem custo adicional para você.
-    </p>
-    <p class="direitos">© 2026 Minha Vitrine. Todos os direitos reservados.</p>
-  </footer>
+<label>Nome do produto</label>
+<input id="nome" required maxlength="150">
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase-config.js"></script>
-  <script src="script.js"></script>
+<label>Descrição</label>
+<textarea id="descricao"></textarea>
+
+<label>Preço atual</label>
+<input id="preco" placeholder="Ex.: R$ 99,90">
+
+<label>Preço anterior</label>
+<input id="precoAnterior" placeholder="Ex.: R$ 149,90">
+
+<label>Loja</label>
+<select id="loja" required>
+<option value="mercadolivre">Mercado Livre</option>
+<option value="shopee">Shopee</option>
+</select>
+
+<label>Categoria</label>
+<select id="categoria" required>
+<option value="eletronicos">Eletrônicos</option>
+<option value="casa">Casa</option>
+<option value="beleza">Beleza</option>
+<option value="ferramentas">Ferramentas</option>
+</select>
+
+<label>Link de afiliado</label>
+<input id="link" type="url" placeholder="https://..." required>
+
+<label>Foto do produto</label>
+<input id="imagem" type="file" accept="image/jpeg,image/png,image/webp">
+
+<div class="linha">
+<input type="checkbox" id="ativo" checked>
+<label for="ativo">Produto ativo na vitrine</label>
+</div>
+
+<button class="botao" id="btnSalvar" type="submit">
+Salvar produto
+</button>
+
+<button class="botao secundario" type="button"
+onclick="limparFormulario()">
+Cancelar edição
+</button>
+
+</form>
+
+<div id="mensagemProduto"></div>
+
+</div>
+
+<div class="card">
+
+<h2>Produtos cadastrados</h2>
+
+<button class="botao secundario" onclick="carregarProdutos()">
+Atualizar lista
+</button>
+
+<div id="listaProdutos">
+Carregando produtos...
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
+<script>
+
+const db = window.supabaseClient;
+
+let produtoEditando = null;
+
+function mensagemLogin(texto) {
+  document.getElementById("mensagem").textContent = texto;
+}
+
+function mensagemProduto(texto) {
+  document.getElementById("mensagemProduto").textContent = texto;
+}
+
+async function entrar() {
+
+  const email = document.getElementById("email").value.trim();
+  const senha = document.getElementById("senha").value;
+  const botao = document.getElementById("btnEntrar");
+
+  if (!email || !senha) {
+    mensagemLogin("Preencha e-mail e senha.");
+    return;
+  }
+
+  botao.disabled = true;
+  mensagemLogin("Verificando acesso...");
+
+  try {
+
+    const { error } = await db.auth.signInWithPassword({
+      email,
+      password: senha
+    });
+
+    if (error) {
+      mensagemLogin("Não foi possível entrar. Confira seus dados.");
+      return;
+    }
+
+    await verificarAdministrador();
+
+  } catch (erro) {
+
+    console.error(erro);
+    mensagemLogin("Erro ao conectar com o Supabase.");
+
+  } finally {
+
+    botao.disabled = false;
+
+  }
+}
+
+async function verificarAdministrador() {
+
+  const { data, error } = await db.rpc("is_admin");
+
+  if (error || data !== true) {
+
+    await db.auth.signOut();
+    document.getElementById("areaAdmin").style.display = "none";
+    document.getElementById("areaLogin").style.display = "block";
+
+    mensagemLogin("Este usuário não possui permissão de administrador.");
+    return false;
+
+  }
+
+  document.getElementById("areaLogin").style.display = "none";
+  document.getElementById("areaAdmin").style.display = "block";
+
+  await carregarProdutos();
+
+  return true;
+}
+
+async function sair() {
+
+  await db.auth.signOut();
+
+  document.getElementById("areaAdmin").style.display = "none";
+  document.getElementById("areaLogin").style.display = "block";
+  document.getElementById("senha").value = "";
+
+  limparFormulario();
+
+}
+
+function limparFormulario() {
+
+  document.getElementById("formProduto").reset();
+
+  document.getElementById("ativo").checked = true;
+  document.getElementById("tituloFormulario").textContent = "Cadastrar produto";
+  document.getElementById("btnSalvar").textContent = "Salvar produto";
+
+  produtoEditando = null;
+  mensagemProduto("");
+
+}
+
+async function enviarImagem(arquivo) {
+
+  if (!arquivo) return null;
+
+  const tiposPermitidos = [
+    "image/jpeg",
+    "image/png",
+    "image/webp"
+  ];
+
+  if (!tiposPermitidos.includes(arquivo.type)) {
+    throw new Error("Use uma imagem JPG, PNG ou WEBP.");
+  }
+
+  if (arquivo.size > 5 * 1024 * 1024) {
+    throw new Error("A imagem deve ter no máximo 5 MB.");
+  }
+
+  const extensao = arquivo.name.split(".").pop().toLowerCase();
+  const nomeArquivo = crypto.randomUUID() + "." + extensao;
+
+  const { error } = await db.storage
+    .from("product-images")
+    .upload(nomeArquivo, arquivo, {
+      contentType: arquivo.type,
+      upsert: false
+    });
+
+  if (error) throw error;
+
+  const { data } = db.storage
+    .from("product-images")
+    .getPublicUrl(nomeArquivo);
+
+  return data.publicUrl;
+
+}
+
+document.getElementById("formProduto")
+.addEventListener("submit", async function(event) {
+
+  event.preventDefault();
+
+  const botao = document.getElementById("btnSalvar");
+  botao.disabled = true;
+  mensagemProduto("Salvando produto...");
+
+  try {
+
+    const nome = document.getElementById("nome").value.trim();
+    const link = document.getElementById("link").value.trim();
+
+    const url = new URL(link);
+
+    if (!["http:", "https:"].includes(url.protocol)) {
+      throw new Error("O link precisa usar HTTP ou HTTPS.");
+    }
+
+    const arquivo = document.getElementById("imagem").files[0];
+
+    let imagemUrl = null;
+
+    if (arquivo) {
+      imagemUrl = await enviarImagem(arquivo);
+    }
+
+    if (!produtoEditando && !imagemUrl) {
+      throw new Error("Escolha uma foto para o produto.");
+    }
+
+    const dados = {
+
+      name: nome,
+      description: document.getElementById("descricao").value.trim(),
+      price: document.getElementById("preco").value.trim(),
+      old_price: document.getElementById("precoAnterior").value.trim(),
+      store: document.getElementById("loja").value,
+      category: document.getElementById("categoria").value,
+      affiliate_url: url.href,
+      active: document.getElementById("ativo").checked
+
+    };
+
+    if (imagemUrl) {
+      dados.image_url = imagemUrl;
+    }
+
+    let resultado;
+
+    if (produtoEditando) {
+
+      resultado = await db
+        .from("products")
+        .update(dados)
+        .eq("id", produtoEditando);
+
+    } else {
+
+      resultado = await db
+        .from("products")
+        .insert(dados);
+
+    }
+
+    if (resultado.error) {
+      throw resultado.error;
+    }
+
+    mensagemProduto("Produto salvo com sucesso!");
+
+    limparFormulario();
+    await carregarProdutos();
+
+  } catch (erro) {
+
+    console.error(erro);
+    mensagemProduto("Erro: " + (erro.message || "Não foi possível salvar."));
+
+  } finally {
+
+    botao.disabled = false;
+
+  }
+
+});
+
+function criarElemento(tag, classe, texto) {
+
+  const elemento = document.createElement(tag);
+
+  if (classe) elemento.className = classe;
+  if (texto !== undefined) elemento.textContent = texto;
+
+  return elemento;
+
+}
+
+async function carregarProdutos() {
+
+  const lista = document.getElementById("listaProdutos");
+  lista.textContent = "Carregando produtos...";
+
+  const { data, error } = await db
+    .from("products")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+
+    console.error(error);
+    lista.textContent = "Não foi possível carregar os produtos.";
+    return;
+
+  }
+
+  lista.replaceChildren();
+
+  if (!data || data.length === 0) {
+
+    lista.textContent = "Nenhum produto cadastrado.";
+    return;
+
+  }
+
+  data.forEach(produto => {
+
+    const card = criarElemento("div", "produto");
+
+    if (produto.image_url) {
+
+      const imagem = criarElemento("img");
+      imagem.src = produto.image_url;
+      imagem.alt = produto.name || "Foto do produto";
+      imagem.loading = "lazy";
+      card.appendChild(imagem);
+
+    }
+
+    card.appendChild(criarElemento("h3", "", produto.name));
+    card.appendChild(criarElemento("p", "info", "Preço: " + (produto.price || "Não informado")));
+    card.appendChild(criarElemento("p", "info", "Loja: " + produto.store));
+    card.appendChild(criarElemento("p", "info", "Categoria: " + produto.category));
+    card.appendChild(criarElemento("p", "info", produto.active ? "Status: Ativo" : "Status: Inativo"));
+
+    const acoes = criarElemento("div", "acoes");
+
+    const editar = criarElemento("button", "secundario", "Editar");
+    editar.type = "button";
+    editar.addEventListener("click", () => editarProduto(produto));
+
+    const ativar = criarElemento(
+      "button",
+      "ativar",
+      produto.active ? "Desativar" : "Ativar"
+    );
+
+    ativar.type = "button";
+    ativar.addEventListener("click", () => alterarStatus(produto));
+
+    const excluir = criarElemento("button", "excluir", "Excluir");
+    excluir.type = "button";
+    excluir.addEventListener("click", () => excluirProduto(produto.id));
+
+    acoes.append(editar, ativar, excluir);
+    card.appendChild(acoes);
+    lista.appendChild(card);
+
+  });
+
+}
+
+function editarProduto(produto) {
+
+  produtoEditando = produto.id;
+
+  document.getElementById("nome").value = produto.name || "";
+  document.getElementById("descricao").value = produto.description || "";
+  document.getElementById("preco").value = produto.price || "";
+  document.getElementById("precoAnterior").value = produto.old_price || "";
+  document.getElementById("loja").value = produto.store || "mercadolivre";
+  document.getElementById("categoria").value = produto.category || "eletronicos";
+  document.getElementById("link").value = produto.affiliate_url || "";
+  document.getElementById("ativo").checked = produto.active === true;
+
+  document.getElementById("tituloFormulario").textContent = "Editar produto";
+  document.getElementById("btnSalvar").textContent = "Atualizar produto";
+
+  mensagemProduto("Se não escolher outra foto, a imagem atual será mantida.");
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+}
+
+async function alterarStatus(produto) {
+
+  const { error } = await db
+    .from("products")
+    .update({ active: !produto.active })
+    .eq("id", produto.id);
+
+  if (error) {
+
+    alert("Não foi possível alterar o status.");
+    console.error(error);
+    return;
+
+  }
+
+  await carregarProdutos();
+
+}
+
+async function excluirProduto(id) {
+
+  if (!confirm("Deseja realmente excluir este produto?")) {
+    return;
+  }
+
+  const { error } = await db
+    .from("products")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+
+    alert("Não foi possível excluir o produto.");
+    console.error(error);
+    return;
+
+  }
+
+  alert("Produto excluído.");
+  await carregarProdutos();
+
+}
+
+async function iniciar() {
+
+  const { data, error } = await db.auth.getSession();
+
+  if (error) return;
+
+  if (data.session) {
+    await verificarAdministrador();
+  }
+
+}
+
+iniciar();
+
+</script>
+
 </body>
 </html>
+
