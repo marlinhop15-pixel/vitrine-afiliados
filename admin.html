@@ -2,202 +2,367 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Administração - Minha Vitrine</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      padding: 20px;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #101827;
-      color: white;
-      font-family: Arial, sans-serif;
-    }
-
-    .painel {
-      width: 100%;
-      max-width: 420px;
-      padding: 28px;
-      background: #1e293b;
-      border-radius: 16px;
-    }
-
-    h1 {
-      text-align: center;
-      font-size: 25px;
-    }
-
-    p {
-      text-align: center;
-      color: #cbd5e1;
-    }
-
-    input {
-      width: 100%;
-      padding: 14px;
-      margin: 10px 0;
-      border: 1px solid #475569;
-      border-radius: 8px;
-      background: #0f172a;
-      color: white;
-      font-size: 16px;
-    }
-
-    button {
-      width: 100%;
-      padding: 14px;
-      margin-top: 12px;
-      border: 0;
-      border-radius: 8px;
-      background: #f97316;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    #mensagem {
-      margin-top: 15px;
-      font-size: 14px;
-      text-align: center;
-    }
-
-    #areaAdmin {
-      display: none;
-    }
-
-    .sair {
-      background: #475569;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administração - Minha Vitrine</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:16px;background:#101827;color:white;font-family:Arial,sans-serif}
+.container{max-width:650px;margin:auto}
+.painel{background:#1e293b;padding:20px;border-radius:14px;margin-bottom:18px}
+input,textarea,select{width:100%;padding:13px;margin:7px 0;border:1px solid #475569;border-radius:8px;background:#0f172a;color:white;font-size:15px}
+textarea{min-height:75px}
+button{padding:12px;border:0;border-radius:8px;background:#f97316;color:white;font-weight:bold;font-size:15px;cursor:pointer}
+button:disabled{opacity:.6}
+.botao-cheio{width:100%;margin-top:10px}
+.btn-secundario{background:#475569}
+.btn-excluir{background:#dc2626}
+.btn-status{background:#15803d}
+.produto{background:#0f172a;border:1px solid #334155;padding:14px;border-radius:10px;margin-top:12px}
+.produto img{width:100%;max-height:180px;object-fit:contain;background:white;border-radius:8px}
+.acoes{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.acoes button{flex:1}
+#areaAdmin{display:none}
+#mensagem,#mensagemProduto{margin-top:12px;text-align:center;color:#fbbf24}
+.status{color:#86efac;font-weight:bold}
+</style>
 </head>
-
 <body>
+<div class="container">
 
-  <div class="painel">
+<section id="areaLogin" class="painel">
+<h1>🔐 Minha Vitrine</h1>
+<p>Painel administrativo</p>
+<input type="email" id="email" placeholder="Seu e-mail">
+<input type="password" id="senha" placeholder="Sua senha">
+<button class="botao-cheio" id="btnEntrar" onclick="entrar()">Entrar</button>
+<div id="mensagem"></div>
+</section>
 
-    <section id="areaLogin">
-      <h1>🔐 Minha Vitrine</h1>
-      <p>Painel administrativo</p>
+<section id="areaAdmin">
+<div class="painel">
+<h1>📦 Administração</h1>
+<p>Gerencie seus produtos</p>
+<button class="btn-secundario" onclick="sair()">Sair</button>
+</div>
 
-      <input
-        type="email"
-        id="email"
-        placeholder="Seu e-mail"
-        autocomplete="username"
-      >
+<div class="painel">
+<h2 id="tituloFormulario">Cadastrar produto</h2>
+<form id="formProduto">
+<input type="hidden" id="produtoId">
 
-      <input
-        type="password"
-        id="senha"
-        placeholder="Sua senha"
-        autocomplete="current-password"
-      >
+<label>Nome do produto</label>
+<input id="nome" required placeholder="Nome do produto">
 
-      <button id="btnEntrar" onclick="entrar()">
-        Entrar
-      </button>
+<label>Descrição</label>
+<textarea id="descricao" placeholder="Descrição do produto"></textarea>
 
-      <div id="mensagem"></div>
-    </section>
+<label>Preço atual</label>
+<input id="preco" placeholder="Ex: R$ 99,90">
 
-    <section id="areaAdmin">
-      <h1>Administração</h1>
-      <p id="boasVindas">Acesso autorizado!</p>
+<label>Preço anterior</label>
+<input id="precoAnterior" placeholder="Ex: R$ 149,90">
 
-      <p>Área administrativa liberada.</p>
+<label>Loja</label>
+<select id="loja" required>
+<option value="">Selecione</option>
+<option value="Mercado Livre">Mercado Livre</option>
+<option value="Amazon">Amazon</option>
+<option value="Shopee">Shopee</option>
+<option value="Outra">Outra</option>
+</select>
 
-      <button class="sair" onclick="sair()">
-        Sair
-      </button>
-    </section>
+<label>Categoria</label>
+<select id="categoria">
+<option value="">Selecione</option>
+<option value="Eletrônicos">Eletrônicos</option>
+<option value="Casa">Casa</option>
+<option value="Beleza">Beleza</option>
+<option value="Ferramentas">Ferramentas</option>
+</select>
 
-  </div>
+<label>Link de afiliado</label>
+<input id="link" type="url" required placeholder="https://...">
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase-config.js"></script>
+<label>Imagem do produto</label>
+<input id="imagem" type="file" accept="image/jpeg,image/png,image/webp">
 
-  <script>
-    const supabaseClient = window.supabaseClient;
+<label>
+<input id="ativo" type="checkbox" checked style="width:auto">
+Produto ativo
+</label>
 
-    async function entrar() {
-      const email = document.getElementById("email").value.trim();
-      const senha = document.getElementById("senha").value;
-      const mensagem = document.getElementById("mensagem");
-      const botao = document.getElementById("btnEntrar");
+<button class="botao-cheio" id="btnSalvar" type="submit">Salvar produto</button>
+<button class="botao-cheio btn-secundario" type="button" onclick="limparFormulario()">Limpar formulário</button>
+</form>
+<div id="mensagemProduto"></div>
+</div>
 
-      if (!email || !senha) {
-        mensagem.textContent = "Preencha e-mail e senha.";
-        return;
-      }
+<div class="painel">
+<h2>Produtos cadastrados</h2>
+<div id="listaProdutos">Carregando produtos...</div>
+</div>
+</section>
+</div>
 
-      botao.disabled = true;
-      mensagem.textContent = "Verificando acesso...";
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
 
-      try {
-        const { error } = await supabaseClient.auth.signInWithPassword({
-          email,
-          password: senha
-        });
+<script>
+const db=window.supabaseClient;
 
-        if (error) {
-          mensagem.textContent = "E-mail ou senha incorretos.";
-          return;
-        }
+function mensagem(texto){
+document.getElementById("mensagem").textContent=texto;
+}
 
-        await verificarAdministrador();
+async function entrar(){
+const email=document.getElementById("email").value.trim();
+const senha=document.getElementById("senha").value;
+const botao=document.getElementById("btnEntrar");
 
-      } catch (erro) {
-        mensagem.textContent = "Erro ao verificar acesso.";
-        console.error(erro);
-      } finally {
-        botao.disabled = false;
-      }
-    }
+if(!email||!senha){
+mensagem("Preencha e-mail e senha.");
+return;
+}
 
-    async function verificarAdministrador() {
-      const mensagem = document.getElementById("mensagem");
+botao.disabled=true;
+mensagem("Verificando acesso...");
 
-      const { data, error } = await supabaseClient.rpc("is_admin");
+try{
+const {error}=await db.auth.signInWithPassword({email,password:senha});
+if(error){
+mensagem("E-mail ou senha incorretos.");
+return;
+}
+await verificarAdministrador();
+}catch(erro){
+console.error(erro);
+mensagem("Erro ao verificar acesso.");
+}finally{
+botao.disabled=false;
+}
+}
 
-      if (error || data !== true) {
-        await supabaseClient.auth.signOut();
-        mensagem.textContent = "Este usuário não é administrador.";
-        return;
-      }
+async function verificarAdministrador(){
+const {data,error}=await db.rpc("is_admin");
 
-      document.getElementById("areaLogin").style.display = "none";
-      document.getElementById("areaAdmin").style.display = "block";
-    }
+if(error||data!==true){
+await db.auth.signOut();
+mensagem("Este usuário não é administrador.");
+return;
+}
 
-    async function sair() {
-      await supabaseClient.auth.signOut();
+document.getElementById("areaLogin").style.display="none";
+document.getElementById("areaAdmin").style.display="block";
+await carregarProdutos();
+}
 
-      document.getElementById("areaAdmin").style.display = "none";
-      document.getElementById("areaLogin").style.display = "block";
-      document.getElementById("senha").value = "";
-      document.getElementById("mensagem").textContent = "";
-    }
+async function sair(){
+await db.auth.signOut();
+document.getElementById("areaAdmin").style.display="none";
+document.getElementById("areaLogin").style.display="block";
+document.getElementById("senha").value="";
+mensagem("");
+}
 
-    async function iniciar() {
-      const { data } = await supabaseClient.auth.getSession();
+function limparFormulario(){
+document.getElementById("formProduto").reset();
+document.getElementById("produtoId").value="";
+document.getElementById("ativo").checked=true;
+document.getElementById("tituloFormulario").textContent="Cadastrar produto";
+document.getElementById("btnSalvar").textContent="Salvar produto";
+document.getElementById("mensagemProduto").textContent="";
+}
 
-      if (data.session) {
-        await verificarAdministrador();
-      }
-    }
+async function carregarProdutos(){
+const lista=document.getElementById("listaProdutos");
+lista.textContent="Carregando produtos...";
 
-    iniciar();
-  </script>
+const {data,error}=await db.from("products")
+.select("*").order("created_at",{ascending:false});
 
+if(error){
+console.error(error);
+lista.textContent="Erro ao carregar produtos: "+error.message;
+return;
+}
+
+lista.innerHTML="";
+
+if(!data||data.length===0){
+lista.textContent="Nenhum produto cadastrado.";
+return;
+}
+
+data.forEach(p=>{
+const card=document.createElement("div");
+card.className="produto";
+
+const nome=document.createElement("h3");
+nome.textContent=p.name;
+
+const preco=document.createElement("p");
+preco.textContent="Preço: "+(p.price||"Não informado");
+
+const status=document.createElement("p");
+status.className="status";
+status.textContent=p.active?"Ativo":"Inativo";
+
+card.append(nome,preco,status);
+
+if(p.image_url){
+const img=document.createElement("img");
+img.src=p.image_url;
+img.alt=p.name;
+card.appendChild(img);
+}
+
+const acoes=document.createElement("div");
+acoes.className="acoes";
+
+const editar=document.createElement("button");
+editar.textContent="Editar";
+editar.onclick=()=>editarProduto(p);
+
+const ativar=document.createElement("button");
+ativar.className="btn-status";
+ativar.textContent=p.active?"Desativar":"Ativar";
+ativar.onclick=()=>alterarStatus(p);
+
+const excluir=document.createElement("button");
+excluir.className="btn-excluir";
+excluir.textContent="Excluir";
+excluir.onclick=()=>excluirProduto(p);
+
+acoes.append(editar,ativar,excluir);
+card.appendChild(acoes);
+lista.appendChild(card);
+});
+}
+
+function editarProduto(p){
+document.getElementById("produtoId").value=p.id;
+document.getElementById("nome").value=p.name||"";
+document.getElementById("descricao").value=p.description||"";
+document.getElementById("preco").value=p.price||"";
+document.getElementById("precoAnterior").value=p.old_price||"";
+document.getElementById("loja").value=p.store||"";
+document.getElementById("categoria").value=p.category||"";
+document.getElementById("link").value=p.affiliate_url||"";
+document.getElementById("ativo").checked=p.active;
+document.getElementById("tituloFormulario").textContent="Editar produto";
+document.getElementById("btnSalvar").textContent="Atualizar produto";
+window.scrollTo({top:0,behavior:"smooth"});
+}
+
+async function salvarImagem(arquivo){
+if(!arquivo)return null;
+
+if(arquivo.size>5*1024*1024){
+throw new Error("A imagem deve ter no máximo 5 MB.");
+}
+
+const tipos=["image/jpeg","image/png","image/webp"];
+if(!tipos.includes(arquivo.type)){
+throw new Error("Use uma imagem JPG, PNG ou WEBP.");
+}
+
+const extensao=arquivo.name.split(".").pop().toLowerCase();
+const nomeArquivo=crypto.randomUUID()+"."+extensao;
+
+const {error}=await db.storage.from("product-images")
+.upload(nomeArquivo,arquivo,{contentType:arquivo.type,upsert:false});
+
+if(error)throw error;
+
+const {data}=db.storage.from("product-images").getPublicUrl(nomeArquivo);
+return data.publicUrl;
+}
+
+document.getElementById("formProduto").addEventListener("submit",async function(e){
+e.preventDefault();
+
+const botao=document.getElementById("btnSalvar");
+const aviso=document.getElementById("mensagemProduto");
+botao.disabled=true;
+aviso.textContent="Salvando produto...";
+
+try{
+const id=document.getElementById("produtoId").value;
+const arquivo=document.getElementById("imagem").files[0];
+
+const produto={
+name:document.getElementById("nome").value.trim(),
+description:document.getElementById("descricao").value.trim(),
+price:document.getElementById("preco").value.trim(),
+old_price:document.getElementById("precoAnterior").value.trim(),
+store:document.getElementById("loja").value,
+category:document.getElementById("categoria").value,
+affiliate_url:document.getElementById("link").value.trim(),
+active:document.getElementById("ativo").checked
+};
+
+if(arquivo)produto.image_url=await salvarImagem(arquivo);
+
+let resultado;
+if(id){
+resultado=await db.from("products").update(produto).eq("id",id);
+}else{
+resultado=await db.from("products").insert(produto);
+}
+
+if(resultado.error)throw resultado.error;
+
+aviso.textContent="Produto salvo com sucesso!";
+limparFormulario();
+await carregarProdutos();
+
+}catch(erro){
+console.error(erro);
+aviso.textContent="Erro: "+erro.message;
+}finally{
+botao.disabled=false;
+}
+});
+
+async function alterarStatus(p){
+const {error}=await db.from("products")
+.update({active:!p.active}).eq("id",p.id);
+
+if(error){
+alert("Erro: "+error.message);
+return;
+}
+await carregarProdutos();
+}
+
+async function excluirProduto(p){
+if(!confirm("Deseja realmente excluir este produto?"))return;
+
+const {error}=await db.from("products").delete().eq("id",p.id);
+
+if(error){
+alert("Erro: "+error.message);
+return;
+}
+await carregarProdutos();
+}
+
+async function iniciar(){
+if(!db){
+mensagem("Erro: Supabase não foi carregado.");
+return;
+}
+
+const {data,error}=await db.auth.getSession();
+if(error){
+mensagem("Erro ao verificar sessão.");
+return;
+}
+if(data.session)await verificarAdministrador();
+}
+
+iniciar();
+</script>
 </body>
 </html>
