@@ -17,26 +17,24 @@ body {
   font-family: Arial, sans-serif;
 }
 
-.painel {
-  max-width: 750px;
-  margin: 20px auto;
+.container {
+  max-width: 650px;
+  margin: auto;
 }
 
-.card {
+.painel {
   background: #1e293b;
   padding: 20px;
   border-radius: 14px;
   margin-bottom: 18px;
 }
 
-h1, h2 {
-  text-align: center;
-}
+h1, h2 { margin-top: 0; }
 
 input, textarea, select {
   width: 100%;
   padding: 13px;
-  margin: 7px 0 13px;
+  margin: 7px 0;
   border: 1px solid #475569;
   border-radius: 8px;
   background: #0f172a;
@@ -45,101 +43,70 @@ input, textarea, select {
 }
 
 textarea {
-  min-height: 85px;
+  min-height: 75px;
   resize: vertical;
 }
 
-label {
-  display: block;
-  color: #cbd5e1;
-  font-size: 14px;
-}
-
 button {
-  padding: 13px;
-  border: none;
+  padding: 12px;
+  border: 0;
   border-radius: 8px;
   background: #f97316;
   color: white;
-  font-size: 15px;
   font-weight: bold;
+  font-size: 15px;
   cursor: pointer;
-  margin: 5px 0;
 }
 
 button:disabled {
-  opacity: .5;
+  opacity: .6;
 }
 
-.botao {
+.btn-secundario { background: #475569; }
+.btn-excluir { background: #dc2626; }
+.btn-status { background: #15803d; }
+
+.botao-cheio {
   width: 100%;
-}
-
-.secundario {
-  background: #475569;
-}
-
-.excluir {
-  background: #dc2626;
-}
-
-.ativar {
-  background: #15803d;
+  margin-top: 10px;
 }
 
 .produto {
   background: #0f172a;
   border: 1px solid #334155;
+  padding: 14px;
   border-radius: 10px;
-  padding: 13px;
   margin-top: 12px;
 }
 
 .produto img {
   width: 100%;
-  max-height: 190px;
+  max-height: 180px;
   object-fit: contain;
-  border-radius: 8px;
   background: white;
-}
-
-.produto h3 {
-  margin-bottom: 5px;
-}
-
-.info {
-  color: #cbd5e1;
-  font-size: 14px;
-}
-
-#areaAdmin {
-  display: none;
-}
-
-#mensagem, #mensagemProduto {
-  text-align: center;
-  margin: 12px 0;
-  font-size: 14px;
-}
-
-.linha {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.linha input {
-  width: auto;
+  border-radius: 8px;
 }
 
 .acoes {
   display: flex;
-  gap: 7px;
   flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
 }
 
-.acoes button {
-  flex: 1;
+.acoes button { flex: 1; }
+
+#areaAdmin { display: none; }
+
+#mensagem {
+  margin-top: 12px;
+  text-align: center;
+  color: #fbbf24;
+}
+
+.status {
+  color: #86efac;
+  font-weight: bold;
 }
 
 </style>
@@ -147,109 +114,95 @@ button:disabled {
 
 <body>
 
-<div class="painel">
+<div class="container">
 
-<section class="card" id="areaLogin">
+<section id="areaLogin" class="painel">
+  <h1>🔐 Minha Vitrine</h1>
+  <p>Painel administrativo</p>
 
-<h1>🔐 Minha Vitrine</h1>
-<p style="text-align:center">Painel administrativo</p>
+  <input type="email" id="email" placeholder="Seu e-mail">
+  <input type="password" id="senha" placeholder="Sua senha">
 
-<label>E-mail</label>
-<input type="email" id="email" autocomplete="username">
+  <button class="botao-cheio" id="btnEntrar" onclick="entrar()">
+    Entrar
+  </button>
 
-<label>Senha</label>
-<input type="password" id="senha" autocomplete="current-password">
-
-<button class="botao" id="btnEntrar" onclick="entrar()">
-Entrar
-</button>
-
-<div id="mensagem"></div>
-
+  <div id="mensagem"></div>
 </section>
 
 <section id="areaAdmin">
 
-<div class="card">
-<h1>📦 Administração</h1>
-<p style="text-align:center">Gerencie seus produtos</p>
+  <div class="painel">
+    <h1>📦 Administração</h1>
+    <p>Gerencie seus produtos</p>
+    <button class="btn-secundario" onclick="sair()">Sair</button>
+  </div>
 
-<button class="botao secundario" onclick="sair()">
-Sair da conta
-</button>
-</div>
+  <div class="painel">
+    <h2 id="tituloFormulario">Cadastrar produto</h2>
 
-<div class="card">
+    <form id="formProduto">
 
-<h2 id="tituloFormulario">Cadastrar produto</h2>
+      <input type="hidden" id="produtoId">
 
-<form id="formProduto">
+      <label>Nome do produto</label>
+      <input id="nome" required placeholder="Nome do produto">
 
-<label>Nome do produto</label>
-<input id="nome" required maxlength="150">
+      <label>Descrição</label>
+      <textarea id="descricao" placeholder="Descrição do produto"></textarea>
 
-<label>Descrição</label>
-<textarea id="descricao"></textarea>
+      <label>Preço atual</label>
+      <input id="preco" placeholder="Ex: R$ 99,90">
 
-<label>Preço atual</label>
-<input id="preco" placeholder="Ex.: R$ 99,90">
+      <label>Preço anterior</label>
+      <input id="precoAnterior" placeholder="Ex: R$ 149,90">
 
-<label>Preço anterior</label>
-<input id="precoAnterior" placeholder="Ex.: R$ 149,90">
+      <label>Loja</label>
+      <select id="loja" required>
+        <option value="">Selecione</option>
+        <option value="Mercado Livre">Mercado Livre</option>
+        <option value="Amazon">Amazon</option>
+        <option value="Shopee">Shopee</option>
+        <option value="Outra">Outra</option>
+      </select>
 
-<label>Loja</label>
-<select id="loja" required>
-<option value="mercadolivre">Mercado Livre</option>
-<option value="shopee">Shopee</option>
-</select>
+      <label>Categoria</label>
+      <select id="categoria">
+        <option value="">Selecione</option>
+        <option value="Eletrônicos">Eletrônicos</option>
+        <option value="Casa">Casa</option>
+        <option value="Beleza">Beleza</option>
+        <option value="Ferramentas">Ferramentas</option>
+      </select>
 
-<label>Categoria</label>
-<select id="categoria" required>
-<option value="eletronicos">Eletrônicos</option>
-<option value="casa">Casa</option>
-<option value="beleza">Beleza</option>
-<option value="ferramentas">Ferramentas</option>
-</select>
+      <label>Link de afiliado</label>
+      <input id="link" type="url" required placeholder="https://...">
 
-<label>Link de afiliado</label>
-<input id="link" type="url" placeholder="https://..." required>
+      <label>Imagem do produto</label>
+      <input id="imagem" type="file" accept="image/jpeg,image/png,image/webp">
 
-<label>Foto do produto</label>
-<input id="imagem" type="file" accept="image/jpeg,image/png,image/webp">
+      <label>
+        <input id="ativo" type="checkbox" checked style="width:auto">
+        Produto ativo
+      </label>
 
-<div class="linha">
-<input type="checkbox" id="ativo" checked>
-<label for="ativo">Produto ativo na vitrine</label>
-</div>
+      <button class="botao-cheio" id="btnSalvar" type="submit">
+        Salvar produto
+      </button>
 
-<button class="botao" id="btnSalvar" type="submit">
-Salvar produto
-</button>
+      <button class="botao-cheio btn-secundario" type="button" onclick="limparFormulario()">
+        Limpar formulário
+      </button>
 
-<button class="botao secundario" type="button"
-onclick="limparFormulario()">
-Cancelar edição
-</button>
+    </form>
 
-</form>
+    <div id="mensagemProduto"></div>
+  </div>
 
-<div id="mensagemProduto"></div>
-
-</div>
-
-<div class="card">
-
-<h2>Produtos cadastrados</h2>
-
-<button class="botao secundario" onclick="carregarProdutos()">
-Atualizar lista
-</button>
-
-<div id="listaProdutos">
-Carregando produtos...
-</div>
-
-</div>
+  <div class="painel">
+    <h2>Produtos cadastrados</h2>
+    <div id="listaProdutos">Carregando produtos...</div>
+  </div>
 
 </section>
 
@@ -259,123 +212,174 @@ Carregando produtos...
 <script src="supabase-config.js"></script>
 
 <script>
-
 const db = window.supabaseClient;
 
-let produtoEditando = null;
-
-function mensagemLogin(texto) {
+function mensagem(texto) {
   document.getElementById("mensagem").textContent = texto;
 }
 
-function mensagemProduto(texto) {
-  document.getElementById("mensagemProduto").textContent = texto;
-}
-
 async function entrar() {
-
   const email = document.getElementById("email").value.trim();
   const senha = document.getElementById("senha").value;
   const botao = document.getElementById("btnEntrar");
 
   if (!email || !senha) {
-    mensagemLogin("Preencha e-mail e senha.");
+    mensagem("Preencha e-mail e senha.");
     return;
   }
 
   botao.disabled = true;
-  mensagemLogin("Verificando acesso...");
+  mensagem("Verificando acesso...");
 
   try {
-
     const { error } = await db.auth.signInWithPassword({
       email,
       password: senha
     });
 
     if (error) {
-      mensagemLogin("Não foi possível entrar. Confira seus dados.");
+      mensagem("E-mail ou senha incorretos.");
       return;
     }
 
     await verificarAdministrador();
 
   } catch (erro) {
-
     console.error(erro);
-    mensagemLogin("Erro ao conectar com o Supabase.");
-
+    mensagem("Erro ao verificar acesso.");
   } finally {
-
     botao.disabled = false;
-
   }
 }
 
 async function verificarAdministrador() {
-
   const { data, error } = await db.rpc("is_admin");
 
   if (error || data !== true) {
-
     await db.auth.signOut();
-    document.getElementById("areaAdmin").style.display = "none";
-    document.getElementById("areaLogin").style.display = "block";
-
-    mensagemLogin("Este usuário não possui permissão de administrador.");
-    return false;
-
+    mensagem("Este usuário não é administrador.");
+    return;
   }
 
   document.getElementById("areaLogin").style.display = "none";
   document.getElementById("areaAdmin").style.display = "block";
 
   await carregarProdutos();
-
-  return true;
 }
 
 async function sair() {
-
   await db.auth.signOut();
 
   document.getElementById("areaAdmin").style.display = "none";
   document.getElementById("areaLogin").style.display = "block";
   document.getElementById("senha").value = "";
-
-  limparFormulario();
-
+  mensagem("");
 }
 
 function limparFormulario() {
-
   document.getElementById("formProduto").reset();
-
+  document.getElementById("produtoId").value = "";
   document.getElementById("ativo").checked = true;
   document.getElementById("tituloFormulario").textContent = "Cadastrar produto";
   document.getElementById("btnSalvar").textContent = "Salvar produto";
-
-  produtoEditando = null;
-  mensagemProduto("");
-
+  document.getElementById("mensagemProduto").textContent = "";
 }
 
-async function enviarImagem(arquivo) {
+async function carregarProdutos() {
+  const lista = document.getElementById("listaProdutos");
+  lista.textContent = "Carregando produtos...";
 
-  if (!arquivo) return null;
+  const { data, error } = await db
+    .from("products")
+    .select("*")
+    .order("created_at", { ascending: false });
 
-  const tiposPermitidos = [
-    "image/jpeg",
-    "image/png",
-    "image/webp"
-  ];
-
-  if (!tiposPermitidos.includes(arquivo.type)) {
-    throw new Error("Use uma imagem JPG, PNG ou WEBP.");
+  if (error) {
+    console.error(error);
+    lista.textContent = "Erro ao carregar produtos: " + error.message;
+    return;
   }
+
+  lista.innerHTML = "";
+
+  if (!data || data.length === 0) {
+    lista.textContent = "Nenhum produto cadastrado.";
+    return;
+  }
+
+  data.forEach(produto => {
+    const card = document.createElement("div");
+    card.className = "produto";
+
+    const nome = document.createElement("h3");
+    nome.textContent = produto.name;
+
+    const preco = document.createElement("p");
+    preco.textContent = "Preço: " + (produto.price || "Não informado");
+
+    const status = document.createElement("p");
+    status.className = "status";
+    status.textContent = produto.active ? "Ativo" : "Inativo";
+
+    card.append(nome, preco, status);
+
+    if (produto.image_url) {
+      const img = document.createElement("img");
+      img.src = produto.image_url;
+      img.alt = produto.name;
+      card.appendChild(img);
+    }
+
+    const acoes = document.createElement("div");
+    acoes.className = "acoes";
+
+    const editar = document.createElement("button");
+    editar.textContent = "Editar";
+    editar.onclick = () => editarProduto(produto);
+
+    const ativar = document.createElement("button");
+    ativar.className = "btn-status";
+    ativar.textContent = produto.active ? "Desativar" : "Ativar";
+    ativar.onclick = () => alterarStatus(produto);
+
+    const excluir = document.createElement("button");
+    excluir.className = "btn-excluir";
+    excluir.textContent = "Excluir";
+    excluir.onclick = () => excluirProduto(produto);
+
+    acoes.append(editar, ativar, excluir);
+    card.appendChild(acoes);
+    lista.appendChild(card);
+  });
+}
+
+function editarProduto(p) {
+  document.getElementById("produtoId").value = p.id;
+  document.getElementById("nome").value = p.name || "";
+  document.getElementById("descricao").value = p.description || "";
+  document.getElementById("preco").value = p.price || "";
+  document.getElementById("precoAnterior").value = p.old_price || "";
+  document.getElementById("loja").value = p.store || "";
+  document.getElementById("categoria").value = p.category || "";
+  document.getElementById("link").value = p.affiliate_url || "";
+  document.getElementById("ativo").checked = p.active;
+  document.getElementById("tituloFormulario").textContent = "Editar produto";
+  document.getElementById("btnSalvar").textContent = "Atualizar produto";
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+async function salvarImagem(arquivo) {
+  if (!arquivo) return null;
 
   if (arquivo.size > 5 * 1024 * 1024) {
     throw new Error("A imagem deve ter no máximo 5 MB.");
+  }
+
+  const tiposPermitidos = ["image/jpeg", "image/png", "image/webp"];
+
+  if (!tiposPermitidos.includes(arquivo.type)) {
+    throw new Error("Use uma imagem JPG, PNG ou WEBP.");
   }
 
   const extensao = arquivo.name.split(".").pop().toLowerCase();
@@ -395,263 +399,113 @@ async function enviarImagem(arquivo) {
     .getPublicUrl(nomeArquivo);
 
   return data.publicUrl;
-
 }
 
-document.getElementById("formProduto")
-.addEventListener("submit", async function(event) {
-
-  event.preventDefault();
+document.getElementById("formProduto").addEventListener("submit", async function(e) {
+  e.preventDefault();
 
   const botao = document.getElementById("btnSalvar");
+  const mensagemProduto = document.getElementById("mensagemProduto");
+
   botao.disabled = true;
-  mensagemProduto("Salvando produto...");
+  mensagemProduto.textContent = "Salvando produto...";
 
   try {
-
-    const nome = document.getElementById("nome").value.trim();
-    const link = document.getElementById("link").value.trim();
-
-    const url = new URL(link);
-
-    if (!["http:", "https:"].includes(url.protocol)) {
-      throw new Error("O link precisa usar HTTP ou HTTPS.");
-    }
-
+    const id = document.getElementById("produtoId").value;
     const arquivo = document.getElementById("imagem").files[0];
 
-    let imagemUrl = null;
-
-    if (arquivo) {
-      imagemUrl = await enviarImagem(arquivo);
-    }
-
-    if (!produtoEditando && !imagemUrl) {
-      throw new Error("Escolha uma foto para o produto.");
-    }
-
-    const dados = {
-
-      name: nome,
+    const produto = {
+      name: document.getElementById("nome").value.trim(),
       description: document.getElementById("descricao").value.trim(),
       price: document.getElementById("preco").value.trim(),
       old_price: document.getElementById("precoAnterior").value.trim(),
       store: document.getElementById("loja").value,
       category: document.getElementById("categoria").value,
-      affiliate_url: url.href,
+      affiliate_url: document.getElementById("link").value.trim(),
       active: document.getElementById("ativo").checked
-
     };
 
-    if (imagemUrl) {
-      dados.image_url = imagemUrl;
+    if (arquivo) {
+      produto.image_url = await salvarImagem(arquivo);
     }
 
     let resultado;
 
-    if (produtoEditando) {
-
+    if (id) {
       resultado = await db
         .from("products")
-        .update(dados)
-        .eq("id", produtoEditando);
-
+        .update(produto)
+        .eq("id", id);
     } else {
-
       resultado = await db
         .from("products")
-        .insert(dados);
-
+        .insert(produto);
     }
 
-    if (resultado.error) {
-      throw resultado.error;
-    }
+    if (resultado.error) throw resultado.error;
 
-    mensagemProduto("Produto salvo com sucesso!");
-
+    mensagemProduto.textContent = "Produto salvo com sucesso!";
     limparFormulario();
     await carregarProdutos();
 
   } catch (erro) {
-
     console.error(erro);
-    mensagemProduto("Erro: " + (erro.message || "Não foi possível salvar."));
-
+    mensagemProduto.textContent = "Erro: " + erro.message;
   } finally {
-
     botao.disabled = false;
-
   }
-
 });
 
-function criarElemento(tag, classe, texto) {
-
-  const elemento = document.createElement(tag);
-
-  if (classe) elemento.className = classe;
-  if (texto !== undefined) elemento.textContent = texto;
-
-  return elemento;
-
-}
-
-async function carregarProdutos() {
-
-  const lista = document.getElementById("listaProdutos");
-  lista.textContent = "Carregando produtos...";
-
-  const { data, error } = await db
-    .from("products")
-    .select("*")
-    .order("created_at", { ascending: false });
-
-  if (error) {
-
-    console.error(error);
-    lista.textContent = "Não foi possível carregar os produtos.";
-    return;
-
-  }
-
-  lista.replaceChildren();
-
-  if (!data || data.length === 0) {
-
-    lista.textContent = "Nenhum produto cadastrado.";
-    return;
-
-  }
-
-  data.forEach(produto => {
-
-    const card = criarElemento("div", "produto");
-
-    if (produto.image_url) {
-
-      const imagem = criarElemento("img");
-      imagem.src = produto.image_url;
-      imagem.alt = produto.name || "Foto do produto";
-      imagem.loading = "lazy";
-      card.appendChild(imagem);
-
-    }
-
-    card.appendChild(criarElemento("h3", "", produto.name));
-    card.appendChild(criarElemento("p", "info", "Preço: " + (produto.price || "Não informado")));
-    card.appendChild(criarElemento("p", "info", "Loja: " + produto.store));
-    card.appendChild(criarElemento("p", "info", "Categoria: " + produto.category));
-    card.appendChild(criarElemento("p", "info", produto.active ? "Status: Ativo" : "Status: Inativo"));
-
-    const acoes = criarElemento("div", "acoes");
-
-    const editar = criarElemento("button", "secundario", "Editar");
-    editar.type = "button";
-    editar.addEventListener("click", () => editarProduto(produto));
-
-    const ativar = criarElemento(
-      "button",
-      "ativar",
-      produto.active ? "Desativar" : "Ativar"
-    );
-
-    ativar.type = "button";
-    ativar.addEventListener("click", () => alterarStatus(produto));
-
-    const excluir = criarElemento("button", "excluir", "Excluir");
-    excluir.type = "button";
-    excluir.addEventListener("click", () => excluirProduto(produto.id));
-
-    acoes.append(editar, ativar, excluir);
-    card.appendChild(acoes);
-    lista.appendChild(card);
-
-  });
-
-}
-
-function editarProduto(produto) {
-
-  produtoEditando = produto.id;
-
-  document.getElementById("nome").value = produto.name || "";
-  document.getElementById("descricao").value = produto.description || "";
-  document.getElementById("preco").value = produto.price || "";
-  document.getElementById("precoAnterior").value = produto.old_price || "";
-  document.getElementById("loja").value = produto.store || "mercadolivre";
-  document.getElementById("categoria").value = produto.category || "eletronicos";
-  document.getElementById("link").value = produto.affiliate_url || "";
-  document.getElementById("ativo").checked = produto.active === true;
-
-  document.getElementById("tituloFormulario").textContent = "Editar produto";
-  document.getElementById("btnSalvar").textContent = "Atualizar produto";
-
-  mensagemProduto("Se não escolher outra foto, a imagem atual será mantida.");
-
-  window.scrollTo({ top: 0, behavior: "smooth" });
-
-}
-
-async function alterarStatus(produto) {
-
+async function alterarStatus(p) {
   const { error } = await db
     .from("products")
-    .update({ active: !produto.active })
-    .eq("id", produto.id);
+    .update({ active: !p.active })
+    .eq("id", p.id);
 
   if (error) {
-
-    alert("Não foi possível alterar o status.");
-    console.error(error);
+    alert("Erro: " + error.message);
     return;
-
   }
 
   await carregarProdutos();
-
 }
 
-async function excluirProduto(id) {
-
-  if (!confirm("Deseja realmente excluir este produto?")) {
-    return;
-  }
+async function excluirProduto(p) {
+  if (!confirm("Deseja realmente excluir este produto?")) return;
 
   const { error } = await db
     .from("products")
     .delete()
-    .eq("id", id);
+    .eq("id", p.id);
 
   if (error) {
-
-    alert("Não foi possível excluir o produto.");
-    console.error(error);
+    alert("Erro: " + error.message);
     return;
-
   }
 
-  alert("Produto excluído.");
   await carregarProdutos();
-
 }
 
 async function iniciar() {
+  if (!db) {
+    mensagem("Erro: Supabase não foi carregado.");
+    return;
+  }
 
   const { data, error } = await db.auth.getSession();
 
-  if (error) return;
+  if (error) {
+    mensagem("Erro ao verificar sessão.");
+    return;
+  }
 
   if (data.session) {
     await verificarAdministrador();
   }
-
 }
 
 iniciar();
-
 </script>
 
 </body>
 </html>
-
