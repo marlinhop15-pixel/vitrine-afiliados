@@ -1,511 +1,234 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Administração - Minha Vitrine</title>
+<title>Minha Vitrine | Ofertas e Produtos</title>
 
 <style>
-* { box-sizing: border-box; }
+*{box-sizing:border-box}
 
-body {
-  margin: 0;
-  padding: 16px;
-  background: #101827;
-  color: white;
-  font-family: Arial, sans-serif;
+body{
+  margin:0;
+  background:#101827;
+  color:white;
+  font-family:Arial,sans-serif;
 }
 
-.container {
-  max-width: 650px;
-  margin: auto;
+header{
+  background:#1e293b;
+  padding:25px 16px;
+  text-align:center;
 }
 
-.painel {
-  background: #1e293b;
-  padding: 20px;
-  border-radius: 14px;
-  margin-bottom: 18px;
+header h1{
+  margin:0;
+  color:#f97316;
+  font-size:30px;
 }
 
-h1, h2 { margin-top: 0; }
-
-input, textarea, select {
-  width: 100%;
-  padding: 13px;
-  margin: 7px 0;
-  border: 1px solid #475569;
-  border-radius: 8px;
-  background: #0f172a;
-  color: white;
-  font-size: 15px;
+header p{
+  color:#cbd5e1;
+  margin-bottom:0;
 }
 
-textarea {
-  min-height: 75px;
-  resize: vertical;
+main{
+  max-width:1100px;
+  margin:auto;
+  padding:18px;
 }
 
-button {
-  padding: 12px;
-  border: 0;
-  border-radius: 8px;
-  background: #f97316;
-  color: white;
-  font-weight: bold;
-  font-size: 15px;
-  cursor: pointer;
+.pesquisa{
+  width:100%;
+  padding:15px;
+  border-radius:10px;
+  border:1px solid #475569;
+  background:#1e293b;
+  color:white;
+  font-size:16px;
+  margin-bottom:18px;
 }
 
-button:disabled {
-  opacity: .6;
+.grupo{
+  margin-bottom:20px;
 }
 
-.btn-secundario { background: #475569; }
-.btn-excluir { background: #dc2626; }
-.btn-status { background: #15803d; }
-
-.botao-cheio {
-  width: 100%;
-  margin-top: 10px;
+.grupo h3{
+  color:#f97316;
+  margin-bottom:10px;
 }
 
-.produto {
-  background: #0f172a;
-  border: 1px solid #334155;
-  padding: 14px;
-  border-radius: 10px;
-  margin-top: 12px;
+.botoes{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
 }
 
-.produto img {
-  width: 100%;
-  max-height: 180px;
-  object-fit: contain;
-  background: white;
-  border-radius: 8px;
+.botoes button{
+  padding:10px 14px;
+  border:1px solid #475569;
+  border-radius:20px;
+  background:#1e293b;
+  color:white;
+  cursor:pointer;
 }
 
-.acoes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 12px;
+.botoes button.ativo{
+  background:#f97316;
+  border-color:#f97316;
 }
 
-.acoes button { flex: 1; }
-
-#areaAdmin { display: none; }
-
-#mensagem {
-  margin-top: 12px;
-  text-align: center;
-  color: #fbbf24;
+#contador{
+  color:#cbd5e1;
+  margin:20px 0;
 }
 
-.status {
-  color: #86efac;
-  font-weight: bold;
+#produtos{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:18px;
 }
 
+.produto{
+  background:#1e293b;
+  border:1px solid #334155;
+  border-radius:13px;
+  padding:13px;
+  display:flex;
+  flex-direction:column;
+}
+
+.produto-imagem{
+  width:100%;
+  height:190px;
+  object-fit:contain;
+  background:white;
+  border-radius:9px;
+}
+
+.sem-imagem{
+  height:190px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#334155;
+  border-radius:9px;
+  font-size:45px;
+}
+
+.produto h3{
+  font-size:17px;
+  line-height:1.4;
+}
+
+.produto p{
+  color:#cbd5e1;
+  line-height:1.5;
+}
+
+.preco{
+  color:#4ade80;
+  font-size:22px;
+  font-weight:bold;
+}
+
+.preco-anterior{
+  color:#94a3b8;
+  text-decoration:line-through;
+}
+
+.loja{
+  color:#fbbf24;
+  font-size:13px;
+}
+
+.botao-oferta{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  background:#f97316;
+  color:white;
+  padding:13px;
+  border-radius:8px;
+  font-weight:bold;
+  margin-top:auto;
+}
+
+.mensagem{
+  grid-column:1/-1;
+  text-align:center;
+  padding:30px;
+  background:#1e293b;
+  border-radius:12px;
+  color:#cbd5e1;
+}
+
+footer{
+  margin-top:35px;
+  padding:22px;
+  text-align:center;
+  background:#1e293b;
+  color:#94a3b8;
+  font-size:13px;
+}
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<header>
+  <h1>🛍️ Minha Vitrine</h1>
+  <p>Encontre ofertas e produtos selecionados</p>
+</header>
 
-<section id="areaLogin" class="painel">
-  <h1>🔐 Minha Vitrine</h1>
-  <p>Painel administrativo</p>
+<main>
 
-  <input type="email" id="email" placeholder="Seu e-mail">
-  <input type="password" id="senha" placeholder="Sua senha">
+  <input
+    type="search"
+    id="pesquisa"
+    class="pesquisa"
+    placeholder="🔎 Pesquisar produtos..."
+  >
 
-  <button class="botao-cheio" id="btnEntrar" onclick="entrar()">
-    Entrar
-  </button>
-
-  <div id="mensagem"></div>
-</section>
-
-<section id="areaAdmin">
-
-  <div class="painel">
-    <h1>📦 Administração</h1>
-    <p>Gerencie seus produtos</p>
-    <button class="btn-secundario" onclick="sair()">Sair</button>
+  <div class="grupo">
+    <h3>Lojas</h3>
+    <div class="botoes">
+      <button class="filtro ativo" data-loja="todos">Todas</button>
+      <button class="filtro" data-loja="Mercado Livre">Mercado Livre</button>
+      <button class="filtro" data-loja="Amazon">Amazon</button>
+      <button class="filtro" data-loja="Shopee">Shopee</button>
+      <button class="filtro" data-loja="Outra">Outras</button>
+    </div>
   </div>
 
-  <div class="painel">
-    <h2 id="tituloFormulario">Cadastrar produto</h2>
-
-    <form id="formProduto">
-
-      <input type="hidden" id="produtoId">
-
-      <label>Nome do produto</label>
-      <input id="nome" required placeholder="Nome do produto">
-
-      <label>Descrição</label>
-      <textarea id="descricao" placeholder="Descrição do produto"></textarea>
-
-      <label>Preço atual</label>
-      <input id="preco" placeholder="Ex: R$ 99,90">
-
-      <label>Preço anterior</label>
-      <input id="precoAnterior" placeholder="Ex: R$ 149,90">
-
-      <label>Loja</label>
-      <select id="loja" required>
-        <option value="">Selecione</option>
-        <option value="Mercado Livre">Mercado Livre</option>
-        <option value="Amazon">Amazon</option>
-        <option value="Shopee">Shopee</option>
-        <option value="Outra">Outra</option>
-      </select>
-
-      <label>Categoria</label>
-      <select id="categoria">
-        <option value="">Selecione</option>
-        <option value="Eletrônicos">Eletrônicos</option>
-        <option value="Casa">Casa</option>
-        <option value="Beleza">Beleza</option>
-        <option value="Ferramentas">Ferramentas</option>
-      </select>
-
-      <label>Link de afiliado</label>
-      <input id="link" type="url" required placeholder="https://...">
-
-      <label>Imagem do produto</label>
-      <input id="imagem" type="file" accept="image/jpeg,image/png,image/webp">
-
-      <label>
-        <input id="ativo" type="checkbox" checked style="width:auto">
-        Produto ativo
-      </label>
-
-      <button class="botao-cheio" id="btnSalvar" type="submit">
-        Salvar produto
-      </button>
-
-      <button class="botao-cheio btn-secundario" type="button" onclick="limparFormulario()">
-        Limpar formulário
-      </button>
-
-    </form>
-
-    <div id="mensagemProduto"></div>
+  <div class="grupo">
+    <h3>Categorias</h3>
+    <div class="botoes">
+      <button class="categoria ativo" data-categoria="todos">Todas</button>
+      <button class="categoria" data-categoria="Eletrônicos">Eletrônicos</button>
+      <button class="categoria" data-categoria="Casa">Casa</button>
+      <button class="categoria" data-categoria="Beleza">Beleza</button>
+      <button class="categoria" data-categoria="Ferramentas">Ferramentas</button>
+    </div>
   </div>
 
-  <div class="painel">
-    <h2>Produtos cadastrados</h2>
-    <div id="listaProdutos">Carregando produtos...</div>
-  </div>
+  <div id="contador">Carregando produtos...</div>
 
-</section>
+  <section id="produtos">
+    Carregando produtos...
+  </section>
 
-</div>
+</main>
+
+<footer>
+  <p>Minha Vitrine</p>
+  <p>Alguns links são links de afiliados. Podemos receber uma comissão por compras realizadas, sem custo adicional para você.</p>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
-
-<script>
-const db = window.supabaseClient;
-
-function mensagem(texto) {
-  document.getElementById("mensagem").textContent = texto;
-}
-
-async function entrar() {
-  const email = document.getElementById("email").value.trim();
-  const senha = document.getElementById("senha").value;
-  const botao = document.getElementById("btnEntrar");
-
-  if (!email || !senha) {
-    mensagem("Preencha e-mail e senha.");
-    return;
-  }
-
-  botao.disabled = true;
-  mensagem("Verificando acesso...");
-
-  try {
-    const { error } = await db.auth.signInWithPassword({
-      email,
-      password: senha
-    });
-
-    if (error) {
-      mensagem("E-mail ou senha incorretos.");
-      return;
-    }
-
-    await verificarAdministrador();
-
-  } catch (erro) {
-    console.error(erro);
-    mensagem("Erro ao verificar acesso.");
-  } finally {
-    botao.disabled = false;
-  }
-}
-
-async function verificarAdministrador() {
-  const { data, error } = await db.rpc("is_admin");
-
-  if (error || data !== true) {
-    await db.auth.signOut();
-    mensagem("Este usuário não é administrador.");
-    return;
-  }
-
-  document.getElementById("areaLogin").style.display = "none";
-  document.getElementById("areaAdmin").style.display = "block";
-
-  await carregarProdutos();
-}
-
-async function sair() {
-  await db.auth.signOut();
-
-  document.getElementById("areaAdmin").style.display = "none";
-  document.getElementById("areaLogin").style.display = "block";
-  document.getElementById("senha").value = "";
-  mensagem("");
-}
-
-function limparFormulario() {
-  document.getElementById("formProduto").reset();
-  document.getElementById("produtoId").value = "";
-  document.getElementById("ativo").checked = true;
-  document.getElementById("tituloFormulario").textContent = "Cadastrar produto";
-  document.getElementById("btnSalvar").textContent = "Salvar produto";
-  document.getElementById("mensagemProduto").textContent = "";
-}
-
-async function carregarProdutos() {
-  const lista = document.getElementById("listaProdutos");
-  lista.textContent = "Carregando produtos...";
-
-  const { data, error } = await db
-    .from("products")
-    .select("*")
-    .order("created_at", { ascending: false });
-
-  if (error) {
-    console.error(error);
-    lista.textContent = "Erro ao carregar produtos: " + error.message;
-    return;
-  }
-
-  lista.innerHTML = "";
-
-  if (!data || data.length === 0) {
-    lista.textContent = "Nenhum produto cadastrado.";
-    return;
-  }
-
-  data.forEach(produto => {
-    const card = document.createElement("div");
-    card.className = "produto";
-
-    const nome = document.createElement("h3");
-    nome.textContent = produto.name;
-
-    const preco = document.createElement("p");
-    preco.textContent = "Preço: " + (produto.price || "Não informado");
-
-    const status = document.createElement("p");
-    status.className = "status";
-    status.textContent = produto.active ? "Ativo" : "Inativo";
-
-    card.append(nome, preco, status);
-
-    if (produto.image_url) {
-      const img = document.createElement("img");
-      img.src = produto.image_url;
-      img.alt = produto.name;
-      card.appendChild(img);
-    }
-
-    const acoes = document.createElement("div");
-    acoes.className = "acoes";
-
-    const editar = document.createElement("button");
-    editar.textContent = "Editar";
-    editar.onclick = () => editarProduto(produto);
-
-    const ativar = document.createElement("button");
-    ativar.className = "btn-status";
-    ativar.textContent = produto.active ? "Desativar" : "Ativar";
-    ativar.onclick = () => alterarStatus(produto);
-
-    const excluir = document.createElement("button");
-    excluir.className = "btn-excluir";
-    excluir.textContent = "Excluir";
-    excluir.onclick = () => excluirProduto(produto);
-
-    acoes.append(editar, ativar, excluir);
-    card.appendChild(acoes);
-    lista.appendChild(card);
-  });
-}
-
-function editarProduto(p) {
-  document.getElementById("produtoId").value = p.id;
-  document.getElementById("nome").value = p.name || "";
-  document.getElementById("descricao").value = p.description || "";
-  document.getElementById("preco").value = p.price || "";
-  document.getElementById("precoAnterior").value = p.old_price || "";
-  document.getElementById("loja").value = p.store || "";
-  document.getElementById("categoria").value = p.category || "";
-  document.getElementById("link").value = p.affiliate_url || "";
-  document.getElementById("ativo").checked = p.active;
-  document.getElementById("tituloFormulario").textContent = "Editar produto";
-  document.getElementById("btnSalvar").textContent = "Atualizar produto";
-
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-async function salvarImagem(arquivo) {
-  if (!arquivo) return null;
-
-  if (arquivo.size > 5 * 1024 * 1024) {
-    throw new Error("A imagem deve ter no máximo 5 MB.");
-  }
-
-  const tiposPermitidos = ["image/jpeg", "image/png", "image/webp"];
-
-  if (!tiposPermitidos.includes(arquivo.type)) {
-    throw new Error("Use uma imagem JPG, PNG ou WEBP.");
-  }
-
-  const extensao = arquivo.name.split(".").pop().toLowerCase();
-  const nomeArquivo = crypto.randomUUID() + "." + extensao;
-
-  const { error } = await db.storage
-    .from("product-images")
-    .upload(nomeArquivo, arquivo, {
-      contentType: arquivo.type,
-      upsert: false
-    });
-
-  if (error) throw error;
-
-  const { data } = db.storage
-    .from("product-images")
-    .getPublicUrl(nomeArquivo);
-
-  return data.publicUrl;
-}
-
-document.getElementById("formProduto").addEventListener("submit", async function(e) {
-  e.preventDefault();
-
-  const botao = document.getElementById("btnSalvar");
-  const mensagemProduto = document.getElementById("mensagemProduto");
-
-  botao.disabled = true;
-  mensagemProduto.textContent = "Salvando produto...";
-
-  try {
-    const id = document.getElementById("produtoId").value;
-    const arquivo = document.getElementById("imagem").files[0];
-
-    const produto = {
-      name: document.getElementById("nome").value.trim(),
-      description: document.getElementById("descricao").value.trim(),
-      price: document.getElementById("preco").value.trim(),
-      old_price: document.getElementById("precoAnterior").value.trim(),
-      store: document.getElementById("loja").value,
-      category: document.getElementById("categoria").value,
-      affiliate_url: document.getElementById("link").value.trim(),
-      active: document.getElementById("ativo").checked
-    };
-
-    if (arquivo) {
-      produto.image_url = await salvarImagem(arquivo);
-    }
-
-    let resultado;
-
-    if (id) {
-      resultado = await db
-        .from("products")
-        .update(produto)
-        .eq("id", id);
-    } else {
-      resultado = await db
-        .from("products")
-        .insert(produto);
-    }
-
-    if (resultado.error) throw resultado.error;
-
-    mensagemProduto.textContent = "Produto salvo com sucesso!";
-    limparFormulario();
-    await carregarProdutos();
-
-  } catch (erro) {
-    console.error(erro);
-    mensagemProduto.textContent = "Erro: " + erro.message;
-  } finally {
-    botao.disabled = false;
-  }
-});
-
-async function alterarStatus(p) {
-  const { error } = await db
-    .from("products")
-    .update({ active: !p.active })
-    .eq("id", p.id);
-
-  if (error) {
-    alert("Erro: " + error.message);
-    return;
-  }
-
-  await carregarProdutos();
-}
-
-async function excluirProduto(p) {
-  if (!confirm("Deseja realmente excluir este produto?")) return;
-
-  const { error } = await db
-    .from("products")
-    .delete()
-    .eq("id", p.id);
-
-  if (error) {
-    alert("Erro: " + error.message);
-    return;
-  }
-
-  await carregarProdutos();
-}
-
-async function iniciar() {
-  if (!db) {
-    mensagem("Erro: Supabase não foi carregado.");
-    return;
-  }
-
-  const { data, error } = await db.auth.getSession();
-
-  if (error) {
-    mensagem("Erro ao verificar sessão.");
-    return;
-  }
-
-  if (data.session) {
-    await verificarAdministrador();
-  }
-}
-
-iniciar();
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
+
